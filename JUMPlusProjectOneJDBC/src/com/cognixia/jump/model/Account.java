@@ -33,6 +33,8 @@ public class Account {
 		// add account and transaction to db
 		accountDaoSQL.addAccount(this);
 		
+		customerDaoSQL.addCustomer(this.customer);
+		
 		Transaction transaction = new Transaction("Account created" + " on " + dtf.format(LocalDateTime.now()), customer.getId());
 		this.transactions.add(transaction);
 	}
@@ -90,11 +92,12 @@ public class Account {
 			Transaction transaction = new Transaction("Transfered: " + amount + " to " + accountID + " on " + dtf.format(LocalDateTime.now()), this.customer.getId());
 			this.transactions.add(transaction);
 			
+			accountDaoSQL.updateAccount(this);
+			accountDaoSQL.updateAccount(accountDaoSQL.getAccountByID(accountID));
+			
 		} catch (AccountNotFoundException e) {
 			System.out.println(e.getMessage());
 		}
-		
-		accountDaoSQL.updateAccount(this);
 
 	}
 

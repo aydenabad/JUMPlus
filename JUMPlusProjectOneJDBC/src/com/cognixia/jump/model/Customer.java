@@ -22,7 +22,6 @@ public class Customer {
 		this.password = password;
 		this.initialDeposit = initialDeposit;
 		
-		customerDaoSQL.addCustomer(this);
 	}
 	
 	public String getName() {

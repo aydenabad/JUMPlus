@@ -31,13 +31,15 @@ public class AccountDaoSQL implements AccountDao {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("SELECT * FROM account WHERE customerId = customerID");
 			
-			rs.first();
-			float balance = rs.getFloat("balance");
-			
-			Account account = new Account(balance, customer, transactions);
-			return account;
+			while (rs.next()) {
+				float balance = rs.getFloat("balance");
+				
+				Account account = new Account(balance, customer, transactions);
+				return account;
+			}
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Customer with id = " + customerID + " not found.");
 		}
 		

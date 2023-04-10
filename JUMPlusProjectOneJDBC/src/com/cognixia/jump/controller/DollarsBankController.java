@@ -36,7 +36,8 @@ public class DollarsBankController {
 
 			try {
 				id = scan.nextLine();
-				if (accountDaoSQL.getAccountByID(id) != null) {
+				if (accountDaoSQL.getAccountByID(id) != null && accountDaoSQL.getAccountByID(id).getCustomer() != null) {
+					System.out.println( accountDaoSQL.getAccountByID(id).getCustomer().toString() );
 					throw new AccountAlreadyExistsException(id);
 				}
 				if (id.length() == 0) {
@@ -97,11 +98,12 @@ public class DollarsBankController {
 
 		try {
 			if (accountDaoSQL.getAccountByID(id) == null) {
-				System.out.println("user id not found");
+//				System.out.println("user id not found");
+				System.out.println("here");
 				throw new AccountNotFoundException();
 			}
 			if (!(accountDaoSQL.getAccountByID(id).getCustomer().getPassword().equals(password))) {
-				System.out.println("password not found");
+//				System.out.println("password not found");
 				throw new AccountNotFoundException();
 			}
 
@@ -113,5 +115,7 @@ public class DollarsBankController {
 			return null;
 		}	
 	}
-
 }
+
+
+

@@ -19,9 +19,10 @@ public class TransactionDaoSQL implements TransactionDao {
 	public List<Transaction> getAllTransactionsByID(String id) {
 		
 		try {
-			// find all the departments...
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT * FROM transactions WHERE customerId = id");
+			PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM transaction WHERE customerId = ?");
+			pstmt.setString(1, id);
+			
+			ResultSet rs = pstmt.executeQuery();
 			
 			List<Transaction> TransactionList = new ArrayList<Transaction>();
 			
@@ -40,6 +41,7 @@ public class TransactionDaoSQL implements TransactionDao {
 			return TransactionList;
 			
 		} catch (SQLException e) {
+			e.printStackTrace();
 			System.out.println("Could not retrieve list of transactoins from database");
 		}
 		

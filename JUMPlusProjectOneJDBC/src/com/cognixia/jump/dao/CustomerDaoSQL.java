@@ -21,19 +21,23 @@ public class CustomerDaoSQL implements CustomerDao {
 			pstmt.setString(1, accountID);
 			
 			ResultSet rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+							
+				String name = rs.getString("name");
+				String address = rs.getString("address");
+				String number = rs.getString("number");
+				String id = rs.getString("id");
+				String password = rs.getString("password");
+				float initialDeposit = rs.getFloat("initialDeposit");
+				
+				Customer customer = new Customer(name, address, number, id, password, initialDeposit);
+								
+				return customer;
+			}
 			
-			System.out.println(rs.first());
-			
-			String name = rs.getString("name");
-			String address = rs.getString("address");
-			String number = rs.getString("number");
-			String id = rs.getString("id");
-			String password = rs.getString("password");
-			float initialDeposit = rs.getFloat("initialDeposit");
-			
-			Customer customer = new Customer(name, address, number, id, password, initialDeposit);
-			
-			return customer;
+
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
